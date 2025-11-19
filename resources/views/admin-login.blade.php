@@ -1,28 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
+    <meta charset="UTF-8">
     <title>Admin Login</title>
-    @vite('resources/css/app.css')
-</head>
-<body class="bg-gray-100 flex items-center justify-center min- h-screen">
-    <div class="bg-white p-8 rounded-2xl shadow-lg width-full max-w-sm">
-    <h2 class="text-2xl text-center text-gray-800 mb-6">Admin Login</h2>
-    <form action="" method="post" class="space-y-4">
+@vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <div>
-        <label for="" class="text-black-600 mb-1">Admin name</label>
-        <input type="text" placeholder="Enter Admin name"
-        class="w-full px-4 py-2 border border-gray-300 ronded-xl focus:outline-none">
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="bg-white p-8 rounded-2xl shadow-lg w-full max-w-sm">
+        
+        <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">
+            Admin Login
+        </h2>
+
+        <form action="/admin-login" method="POST" class="space-y-4">
+            @csrf
+
+            <!-- Admin Name -->
+            <div>
+                <label class="block text-gray-600 mb-1">Admin name</label>
+                <input 
+                    type="text" 
+                    name="name"
+                    placeholder="admin"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
+                >
+            </div>
+
+            <!-- Password -->
+            <div>
+                <label class="block text-gray-600 mb-1">Password</label>
+                <input 
+                    type="password" 
+                    name="password"
+                    placeholder="•••"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
+                >
+            </div>
+
+            <!-- Login Button -->
+            <button 
+                type="submit" 
+                class="w-full bg-blue-500 hover:bg-blue-600 transition text-white rounded-xl px-4 py-2 font-medium"
+            >
+                Login
+            </button>
+
+        </form>
+
     </div>
-    <div>
-        <label for="" class="text-black-600 mb-1">Password</label>
-        <input type="text" placeholder="Enter Admin Password"
-        class="w-full px-4 py-2 border border-gray-300 ronded-xl focus:outline-none">
-    </div>
-    <button type="submit" class="w-full bg-blue-500 rounded-xl">Login</button>
-    </form>
-    </div>
-    
+
 </body>
 </html>
