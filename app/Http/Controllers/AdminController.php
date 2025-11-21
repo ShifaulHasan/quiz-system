@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\Admin;
+use App\Models\Category;
 
 class AdminController extends Controller
 {
@@ -46,9 +47,11 @@ class AdminController extends Controller
 }
 function categories(){
 
+    $categories= Category::get();
+
 $admin= Session::get('admin');
         if($admin){
-               return view('categories',["name"=>$admin->name]);
+               return view('categories',["name"=>$admin->name,"categories"=>$categories]);
 
         }
         else{
@@ -61,5 +64,41 @@ function logout(){
     return redirect('admin-login');
 
 }
+function addCategory(Request $request){
+
+    $validation =$request->validate([
+        "category" =>"required | min:3 | unique:categories,name"
+    ]);
+   
+      $admin= Session::get('admin');
+      $category =new Category();
+      $category->name=$request->category;
+      $category->creator=$admin->name;
+      if($category->save()){
+        Session::flash('category',"category".$request->category. "Added");
+      }
+      return redirect("admin-categories");
+
+}
+function deleteCategory($id)
+{
+    $category = Category::find($id);
+
+    if (!$category) {
+        Session::flash('category', "Error : Category not found.");
+        return redirect("admin-categories");
+    }
+
+    $isDeleted = $category->delete();
+
+    if ($isDeleted) {
+        Session::flash('category', "Success : Category deleted.");
+    } else {
+        Session::flash('category', "Error : Failed to delete.");
+    }
+
+    return redirect("admin-categories");
+}
+
 }
 
